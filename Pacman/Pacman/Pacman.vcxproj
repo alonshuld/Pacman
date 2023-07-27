@@ -157,12 +157,14 @@
   <ItemGroup>
     <ClCompile Include="DrawMap.cpp" />
     <ClCompile Include="ConvertSketch.cpp" />
+    <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\ConvertSketch.h" />
     <ClInclude Include="headers\DrawMap.h" />
     <ClInclude Include="headers\Global.h" />
+    <ClInclude Include="headers\Pacman.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

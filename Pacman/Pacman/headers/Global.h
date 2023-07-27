@@ -1,10 +1,10 @@
 #pragma once
 
-const unsigned int CELL_SIZE = 16;
-const unsigned int MAP_HEIGHT = 21;
-const unsigned int MAP_WIDTH = 21;
-const unsigned int SCREEN_RESIZE = 2;
-const unsigned int FRAME_DURATION = 16667;
+const int CELL_SIZE = 16;
+const int MAP_HEIGHT = 21;
+const int MAP_WIDTH = 21;
+const int SCREEN_RESIZE = 2;
+const int FRAME_DURATION = 16667;
 
 enum Cell
 {
@@ -14,8 +14,8 @@ enum Cell
 
 struct Position
 {
-	short x;
-	short y;
+	int x;
+	int y;
 
 	bool operator==(const Position& i_position)
 	{

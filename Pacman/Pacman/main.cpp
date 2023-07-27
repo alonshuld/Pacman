@@ -24,7 +24,7 @@ int main()
 		"#                   #",
 		"#     #       #     #",
 		"#                   #",
-		"#         #         #",
+		"#         P         #",
 		"#                   #",
 		"#   #           #   #",
 		"#    ###########    #",
@@ -45,7 +45,9 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(CELL_SIZE * MAP_WIDTH * SCREEN_RESIZE, CELL_SIZE * MAP_HEIGHT * SCREEN_RESIZE), "Pac-Man", sf::Style::Close);
 	window.setView(sf::View(sf::FloatRect(0, 0, CELL_SIZE * MAP_WIDTH, CELL_SIZE * MAP_HEIGHT)));
 
-	map = convert_sketch(map_sketch);
+	Pacman pacman;
+
+	map = convert_sketch(map_sketch, pacman);
 
 	previous_time = std::chrono::steady_clock::now();
 
@@ -76,6 +78,7 @@ int main()
 			{
 				window.clear();
 				draw_map(map, window);
+				pacman.draw(window);
 				window.display();
 			}
 		}
