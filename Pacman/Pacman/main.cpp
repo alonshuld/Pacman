@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "headers/Global.h"
+#include "headers/ConvertSketch.h"
+#include "headers/DrawMap.h"
 
 int main()
 {
@@ -12,16 +14,44 @@ int main()
 
 	std::chrono::time_point<std::chrono::steady_clock> previous_time;
 
+	std::array<std::string, MAP_HEIGHT> map_sketch = {
+		"#####################",
+		"#                   #",
+		"#                   #",
+		"#                   #",
+		"#                   #",
+		"#                   #",
+		"#                   #",
+		"#     #       #     #",
+		"#                   #",
+		"#         #         #",
+		"#                   #",
+		"#   #           #   #",
+		"#    ###########    #",
+		"#                   #",
+		"#                   #",
+		"#                   #",
+		"#                   #",
+		"#                   #",
+		"#                   #",
+		"#                   #",
+		"#####################"
+	};
+
+	std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> map{};
+
 	sf::Event event;
 	
 	sf::RenderWindow window(sf::VideoMode(CELL_SIZE * MAP_WIDTH * SCREEN_RESIZE, CELL_SIZE * MAP_HEIGHT * SCREEN_RESIZE), "Pac-Man", sf::Style::Close);
 	window.setView(sf::View(sf::FloatRect(0, 0, CELL_SIZE * MAP_WIDTH, CELL_SIZE * MAP_HEIGHT)));
 
+	map = convert_sketch(map_sketch);
+
 	previous_time = std::chrono::steady_clock::now();
 
 	while (window.isOpen())
 	{
-		delta_time = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - previous_time).count();
+		unsigned delta_time = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - previous_time).count();
 
 		lag += delta_time;
 
@@ -40,6 +70,13 @@ int main()
 						window.close();
 					}
 				}
+			}
+
+			if (FRAME_DURATION > lag)
+			{
+				window.clear();
+				draw_map(map, window);
+				window.display();
 			}
 		}
 	}
