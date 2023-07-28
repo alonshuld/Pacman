@@ -23,6 +23,12 @@ std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> convert_sketch(const std::ar
                 case 'P':
                 {
                     i_pacman.set_position(CELL_SIZE * j, CELL_SIZE * i);
+                    break;
+                }
+                case '.':
+                {
+                    output_map[j][i] = Cell::Pellet;
+                    break;
                 }
             }
         }

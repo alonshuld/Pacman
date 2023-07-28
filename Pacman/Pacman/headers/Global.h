@@ -10,7 +10,8 @@ const float FRAME_DURATION = 1.0f / 60.0f;
 enum Cell
 {
 	Empty,
-	Wall
+	Wall,
+	Pellet
 };
 
 struct Position
