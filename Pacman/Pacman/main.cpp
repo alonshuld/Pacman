@@ -64,7 +64,7 @@ int main()
 			window.clear();
 			draw_map(map, window);
 			pacman.draw(window);
-			pacman.update();
+			pacman.update(map);
 			window.display();
 			last_time = curr_time;
 		}
