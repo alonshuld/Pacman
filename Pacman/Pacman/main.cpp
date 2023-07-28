@@ -9,33 +9,29 @@
 
 int main()
 {
-	unsigned lag = 0;
-	unsigned delta_time = 0;
-
-	std::chrono::time_point<std::chrono::steady_clock> previous_time;
+	sf::Clock clock;
+	float curr_time = 0;
+	float last_time = 0;
+	float lag = 0;
 
 	std::array<std::string, MAP_HEIGHT> map_sketch = {
-		"#####################",
-		"#                   #",
-		"#                   #",
-		"#                   #",
-		"#                   #",
-		"#                   #",
-		"#                   #",
-		"#     #       #     #",
-		"#                   #",
-		"#         P         #",
-		"#                   #",
-		"#   #           #   #",
-		"#    ###########    #",
-		"#                   #",
-		"#                   #",
-		"#                   #",
-		"#                   #",
-		"#                   #",
-		"#                   #",
-		"#                   #",
-		"#####################"
+		"#################",
+		"#               #",
+		"#               #",
+		"#               #",
+		"#               #",
+		"#    #       #  #",
+		"#               #",
+		"#        P      #",
+		"#               #",
+		"#  #          # #",
+		"#   ##########  #",
+		"#               #",
+		"#               #",
+		"#               #",
+		"#               #",
+		"#               #",
+		"#################"
 	};
 
 	std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> map{};
@@ -49,20 +45,12 @@ int main()
 
 	map = convert_sketch(map_sketch, pacman);
 
-	previous_time = std::chrono::steady_clock::now();
-
 	while (window.isOpen())
 	{
-		unsigned delta_time = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - previous_time).count();
-
-		lag += delta_time;
-
-		previous_time += std::chrono::milliseconds(delta_time);
-
-		while (FRAME_DURATION <= lag)
+		curr_time = clock.getElapsedTime().asSeconds();
+		
+		if (FRAME_DURATION <= curr_time - last_time)
 		{
-			lag -= FRAME_DURATION;
-
 			while (window.pollEvent(event))
 			{
 				switch (event.type)
@@ -73,14 +61,12 @@ int main()
 					}
 				}
 			}
-
-			if (FRAME_DURATION > lag)
-			{
-				window.clear();
-				draw_map(map, window);
-				pacman.draw(window);
-				window.display();
-			}
+			window.clear();
+			draw_map(map, window);
+			pacman.draw(window);
+			pacman.update();
+			window.display();
+			last_time = curr_time;
 		}
 	}
 }
