@@ -23,40 +23,54 @@ void Pacman::update(const std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i
 	walls[3] = wall_collision(pos.x, pos.y + PACMAN_SPEED, i_map);
 	
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		direction = 0;
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		direction = 1;
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		direction = 2;
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		direction = 3;
-
-	switch (direction)
 	{
-		case 0:
+		if (!walls[0])
+			direction = 0;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		if (!walls[1])
+			direction = 1;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		if (!walls[2])
+			direction = 2;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		if (!walls[3])
+			direction = 3;
+	}
+	if (!walls[direction])
+	{
+		switch (direction)
 		{
-			if(!walls[0])
+			case 0:
+			{
 				pos.x += PACMAN_SPEED;
-			break;
-		}
-		case 1:
-		{
-			if (!walls[1])
+				break;
+			}
+			case 1:
+			{
 				pos.y -= PACMAN_SPEED;
-			break;
-		}
-		case 2:
-		{
-			if (!walls[2])
+				break;
+			}
+			case 2:
+			{
 				pos.x -= PACMAN_SPEED;
-			break;
-		}
-		case 3:
-		{
-			if (!walls[3])
+				break;
+			}
+			case 3:
+			{
 				pos.y += PACMAN_SPEED;
-			break;
+				break;
+			}
 		}
 	}
-	
+
+	if (-CELL_SIZE >= pos.x)
+		pos.x = CELL_SIZE * MAP_WIDTH - PACMAN_SPEED;
+	else if (CELL_SIZE * MAP_WIDTH <= pos.x)
+		pos.x = PACMAN_SPEED - CELL_SIZE;
 }
